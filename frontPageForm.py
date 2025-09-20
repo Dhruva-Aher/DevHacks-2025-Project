@@ -27,8 +27,26 @@ password_field = ft.TextField(
 
 def form_submit_function(e):
     print("Form Submitted")
-    print(f"Username: {username_field.value}")
-    print(f"Password: {password_field.value}")
+    
+    #List of users
+    usernameList = ["enguyen", "daher", "psolomon"]
+    passwordList = ["ethan2007", "dhruva2007", "prince2007"]
+
+    #Checking if the user input is in the username database
+    if (username_field.value in usernameList):
+
+        #Get the index
+        index = usernameList.index(username_field.value)
+
+        if (password_field.value in passwordList and 
+            passwordList[index] == password_field.value):
+            
+            #Login successful
+            print("Login Unsuccessful")
+            print(f"Username: {username_field.value}")
+            print(f"Password: {password_field.value}")
+    else:
+        print("Login Unsuccessful")
 
 form_container = ft.Container(
     ft.Column([
