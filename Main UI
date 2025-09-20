@@ -1,0 +1,65 @@
+import flet as ft
+
+
+def main(page: ft.Page):
+    page.bgcolor = "white"
+    page.title = "Main"
+    
+    instruction_text = ft.TextField(
+        value="Please press on the microphone and speak into it so it can suggest an icebreaker topic.",
+        disabled=True,
+        bgcolor="lightblue",
+        border_color="blue",
+        color="black",
+        width=725
+    )
+    mic_button = ft.Container(
+        content=ft.Image(
+            src="https://img.freepik.com/premium-vector/vector-microphone-icon-blue-microphone-button-flat-design-record-button-isolated_118339-1767.jpg",
+            width=200,
+            height=200
+        ),
+        tooltip="Speak",
+        on_click=lambda e: print("Mic clicked!")
+    )
+    
+    left_column = ft.Column(
+        controls=[instruction_text, mic_button],
+        spacing=100,
+        alignment="start",
+        width=725  
+    )
+
+
+    output_columns = []
+    for i in range(1, 4):
+        title = ft.Text(f"Output {i}", weight="bold", color="Black")
+        textbox = ft.TextField(
+            value="",
+            disabled=True,
+            width=200,
+            bgcolor="#DED9D9",  
+            border_color="yellow",
+            color="yellow"
+        )
+        output_columns.append(ft.Column(controls=[title, textbox], spacing=8))
+    
+    right_column = ft.Column(
+        controls=[ft.Container(height=150)] + output_columns,
+        spacing=25,
+        alignment="start",
+        width=220
+    )
+    
+    main_row = ft.Row(
+        controls=[left_column, right_column],
+        alignment="start",
+        spacing=10  
+    )
+    
+    page.window_width = 800  
+    
+    page.add(main_row)
+
+
+ft.app(target=main)
