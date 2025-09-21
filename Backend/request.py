@@ -7,7 +7,7 @@ from audio import text
 UserID = "User: "
 prefix_question = "Form exactly 5 Icebreaker questions, based the following user conversation, to continue the conversation."
 content = prefix_question + text
-GEMINI_API_KEY = "AIzaSyDfyop-21wkmyErdXMAbS-owlhwO1NeYBE"
+GEMINI_API_KEY = ""
 
 #client = genai.Client(api_key=os.getenv(“GEMINI_API_KEY”))
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -23,7 +23,7 @@ print(response.text)
 #Supermemory Storage -----------------------------------------------------------------------------------
 
 client = Supermemory(
-    api_key="sm_opamYwWLBTUQt52p3eQLTs_PqTVisjbloPVfuqYMbeVRkJomfBQmMKyspkqWWprSIonTuRYHRVagLoadJKOBdyE",
+    api_key="",
     base_url="https://api.supermemory.ai/"
 )
 training_info = content + response.text
