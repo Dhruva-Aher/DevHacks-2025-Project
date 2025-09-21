@@ -6,21 +6,28 @@ import speech_recognition as sr
 fs = 44100
 filename = "output.wav"
 
+recording = []
+stream = None
+
+
 def record_audio():
+    global stream, recording
     print("Recording... Press Enter to stop")
-    recording = []
 
     def callback(indata, frames, time, status):
         recording.append(indata.copy())
 
-    with sd.InputStream(samplerate=fs, channels=1, callback=callback):
-        input()  # stop on Enter********************************************************************
+    stream = sd.InputStream(samplerate=fs, channels=1, callback=callback)
+    stream.start()
 
+def stop_audio():
+    global stream, recording
+    if stream:
+        stream.stop()
+        stream.close()
+        stream = None
     audio_data = np.concatenate(recording, axis=0)
-
-    # Convert float32 array to int16
     audio_data = np.int16(audio_data * 32767)
-
     write(filename, fs, audio_data)
     print(f"Recording saved as {filename}")
 
