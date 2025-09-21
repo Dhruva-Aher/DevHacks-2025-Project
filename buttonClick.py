@@ -1,7 +1,6 @@
 import flet as ft
-#import homeScreen
-import audio
-import request
+import Backend.audio as audio
+import Backend.request as request
 
 icebreaker_questions="Model is Processing ..."
 
