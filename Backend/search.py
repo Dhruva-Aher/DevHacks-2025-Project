@@ -10,7 +10,7 @@ import asyncio
 # )
 
 client = Supermemory(
-    api_key="sm_opamYwWLBTUQt52p3eQLTs_PqTVisjbloPVfuqYMbeVRkJomfBQmMKyspkqWWprSIonTuRYHRVagLoadJKOBdyE",
+    api_key="",
     base_url="https://api.supermemory.ai/"
 )
 
