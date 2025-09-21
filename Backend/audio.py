@@ -5,7 +5,6 @@ import speech_recognition as sr
 
 fs = 44100
 filename = "output.wav"
-text = ""
 
 def record_audio():
     print("Recording... Press Enter to stop")
@@ -26,7 +25,6 @@ def record_audio():
     print(f"Recording saved as {filename}")
 
 def audio_to_text():
-    global text
     recognizer = sr.Recognizer()
     with sr.AudioFile(filename) as source:
         audio = recognizer.record(source)
@@ -37,9 +35,7 @@ def audio_to_text():
             print("Could not understand audio")
         except sr.RequestError as e:
             print(f"API error: {e}")
+    return text
 
-#if __name__ == "__main__":
 record_audio()
-audio_to_text()
-
-#print(text)
+text = audio_to_text()
