@@ -1,6 +1,9 @@
 import flet as ft
 import buttonClick
 
+#sample = buttonClick.icebreaker_questions + " Extra Words"
+#print(sample)
+
 instruction_text = ft.TextField(
     value = "Press on the microphone and speak into it so it can suggest icebreaker topics",
     disabled = True,
@@ -31,7 +34,7 @@ mic_button = ft.Container(
 
 cancel_icon = ft.Container(
     content = ft.Image(
-        src = "https://img.icons8.com/fluent-systems-regular/512/228BE6/cancel.png", 
+        src = "https://img.icons8.com/fluent-systems-regular/512/228BE6/cancel.png",
         width = 100,
         height = 100
     ),
@@ -42,13 +45,13 @@ cancel_icon = ft.Container(
     border_radius = 50,  #circle hitbox
     clip_behavior = ft.ClipBehavior.HARD_EDGE,  # ensure it's clipped
     alignment = ft.alignment.top_right,
-    margin = ft.margin.only(top = 20, left = 230) 
+    margin = ft.margin.only(top = 20, left = 130)
 )
 
 mic_cancel_group = ft.Stack([
     mic_button,
     cancel_icon
-], width = 320, height = 320)  
+], width = 320, height = 320)
 
 left_column = ft.Column(
     controls = [mic_cancel_group],
@@ -57,27 +60,58 @@ left_column = ft.Column(
     expand = True
 )
 
-output_columns = []
-for i in range(1, 6):  
-    title = ft.Text(f"Output {i}", weight="bold", color="black")
-    textbox = ft.TextField(
-        value = "",
-        disabled = True,
-        color = "black",
-        width = 400
-    )
-    output_columns.append(ft.Column([title, textbox], spacing=5, expand=False))
+# output_columns = []
+# for i in range(1, 2):
+#     title = ft.Text(f"Output {i}", weight="bold", color="white")
+#     textbox = ft.TextField(
+#         value = buttonClick.icebreaker_questions,
+#         disabled = True,
+#         color = "white",
+#         width = 400,
+#         height = 400
+#     )
+#     output_columns.append(ft.Column([title, textbox], spacing=5, expand=False))
+#
+#
+# right_column = ft.Column(
+#     controls = output_columns,
+#     spacing = 15,
+#     alignment = "center",
+#     horizontal_alignment = "center",
+#     expand = False
+# )
 
-right_column = ft.Column(
-    controls = output_columns,
-    spacing = 15,
-    alignment = "center",
-    horizontal_alignment = "center",
-    expand = False
+text_box = ft.TextField(
+    value = "Waiting for input...",
+    disabled = True,
+    bgcolor = "lightblue",
+    border_color = "blue",
+    color = "white",
+    width=400,   # fixed width in px
+    multiline = True,
+    min_lines = 200,
+    max_lines = 1000,
+    expand = False,
 )
+def update_text(e):
+    text_box.value = buttonClick.icebreaker_questions
+    text_box.update()
+refresh = ft.ElevatedButton("Refresh", on_click=update_text)
+
+
+
+# text_box = ft.Container(
+#         content=my_text,  # Place the ft.Text control inside the container
+#         width=200,
+#         height=50,
+#         padding=10,
+#         alignment=ft.alignment.center,  # Center the text within the box
+#         bgcolor="blue",
+#         border_radius=5,
+# )
 
 main_row = ft.Row(
-    controls = [left_column, right_column],
+    controls = [left_column, refresh, text_box],
     alignment = ft.MainAxisAlignment.END,
     vertical_alignment = ft.CrossAxisAlignment.START,
     expand = True,
