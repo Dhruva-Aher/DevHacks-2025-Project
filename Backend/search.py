@@ -5,9 +5,6 @@ from dotenv import load_dotenv
 #import request
 import os
 
-# client = AsyncSupermemory(
-#     api_key="sm_opamYwWLBTUQt52p3eQLTs_PqTVisjbloPVfuqYMbeVRkJomfBQmMKyspkqWWprSIonTuRYHRVagLoadJKOBdyE",
-# )
 
 # Load environment variables
 load_dotenv()
