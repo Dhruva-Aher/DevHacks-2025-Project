@@ -37,5 +37,5 @@ def audio_to_text():
             print(f"API error: {e}")
     return text
 
-record_audio()
-text = audio_to_text()
+#record_audio()
+#text = audio_to_text()
