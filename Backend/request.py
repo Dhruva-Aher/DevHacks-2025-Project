@@ -1,6 +1,6 @@
 from google import genai
 from supermemory import Supermemory
-import audio
+#import audio
 #import os
 
 
@@ -8,9 +8,9 @@ GEMINI_API_KEY = ""
 SUPER_MEMORY_KEY = ""
 
 #Google Gemini Request ----------------------------------------------
-def get_icebreakers():
-    audio.record_audio()
-    text = audio.audio_to_text()
+def get_icebreakers(text):
+    #audio.record_audio()
+    #text = audio.audio_to_text()
     # sample_text = "Hello my name is prince, I am majoring in computer science, I take computer science"
     prefix_question = "Form exactly 5 Icebreaker questions, based the following user conversation, to continue the conversation."
     content = prefix_question + text
@@ -34,8 +34,8 @@ def get_icebreakers():
     return generated_text
 
 
-questions = get_icebreakers()
-print(questions)
+#questions = get_icebreakers()
+#print(questions)
 
 
 """
