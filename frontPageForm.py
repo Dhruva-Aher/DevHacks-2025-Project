@@ -4,8 +4,11 @@ from flet import RouteChangeEvent, ViewPopEvent, CrossAxisAlignment, MainAxisAli
 import homeScreen
 
 #List of users
-usernameList = ["enguyen", "daher", "psolomon"]
-passwordList = ["ethan2007", "dhruva2007", "prince2007"]
+# usernameList = ["enguyen", "daher", "psolomon"]
+userNamePassword = {"enguyen": "ethan2007",
+                "daher" : "dhruva2007",
+                "psolomon" : "prince2007"}
+# passwordList = ["ethan2007", "dhruva2007", "prince2007"]
 
 #Keep this global to reference in the function
 username_field = ft.TextField(
@@ -42,21 +45,18 @@ def main(page: Page) -> None:
     def form_submit_function(e):
 
         #Checking if the user input is in the username database
-        if (username_field.value in usernameList):
-
-            #Get the index
-            index = usernameList.index(username_field.value)
-
-            if (password_field.value in passwordList and 
-                passwordList[index] == password_field.value):
-                
-                #Login successful
+        if username_field.value in userNamePassword:
+            if userNamePassword[username_field.value] == password_field.value:
+                # Login successful
                 print("Login Successful")
                 print(f"Username: {username_field.value}")
                 print(f"Password: {password_field.value}")
                 page.go('/mainUI')
+            else:
+                print("Login Unsuccessful")  # Wrong password
         else:
-            print("Login Unsuccessful")
+            print("Login Unsuccessful")  # Username not found
+
 
     def route_change(e: RouteChangeEvent) -> None:
         page.views.clear()
