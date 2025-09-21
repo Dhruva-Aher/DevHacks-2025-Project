@@ -1,57 +1,45 @@
+import sounddevice as sd
+from scipy.io.wavfile import write
+import numpy as np
 import speech_recognition as sr
-import time
 
-recognizer = sr.Recognizer()
-mic = sr.Microphone()
+fs = 44100
+filename = "output.wav"
+text = ""
 
-silence_limit = 5  # seconds
-chunk_duration = 1  # seconds per chunk
+def record_audio():
+    print("Recording... Press Enter to stop")
+    recording = []
 
-with mic as source:
-    print("Adjusting for background noise...")
-    recognizer.adjust_for_ambient_noise(source, duration=1)
-    print("Start speaking:")
+    def callback(indata, frames, time, status):
+        recording.append(indata.copy())
 
-    audio_chunks = []
-    last_sound_time = time.time()
-    stop_detected = False
+    with sd.InputStream(samplerate=fs, channels=1, callback=callback):
+        input()  # stop on Enter********************************************************************
 
-    while True:
-        audio = recognizer.listen(source, phrase_time_limit=chunk_duration)
-        audio_chunks.append(audio)
+    audio_data = np.concatenate(recording, axis=0)
 
-        # Try to recognize right after each chunk
+    # Convert float32 array to int16
+    audio_data = np.int16(audio_data * 32767)
+
+    write(filename, fs, audio_data)
+    print(f"Recording saved as {filename}")
+
+def audio_to_text():
+    global text
+    recognizer = sr.Recognizer()
+    with sr.AudioFile(filename) as source:
+        audio = recognizer.record(source)
         try:
             text = recognizer.recognize_google(audio)
-            print("Heard chunk:", text)
-            if "stop" in text.lower():
-                print("Detected keyword 'stop', stopping...")
-                stop_detected = True
-                break
-            last_sound_time = time.time()  # Only update on successful recognition
+            print("Transcribed Text:", text)
         except sr.UnknownValueError:
-            # If the chunk is not recognized, it's likely silence or noise
-            pass
+            print("Could not understand audio")
         except sr.RequestError as e:
-            print(f"Could not request results; {e}")
+            print(f"API error: {e}")
 
-        if time.time() - last_sound_time > silence_limit:
-            print("Detected 5 seconds of silence, stopping...")
-            break
+#if __name__ == "__main__":
+record_audio()
+audio_to_text()
 
-if audio_chunks:
-    full_audio = sr.AudioData(
-        b"".join(chunk.get_raw_data() for chunk in audio_chunks),
-        audio_chunks[0].sample_rate,
-        audio_chunks[0].sample_width
-    )
-
-    try:
-        text = recognizer.recognize_google(full_audio)
-        print("Full transcription:", text)
-    except sr.UnknownValueError:
-        print("Sorry, I could not understand the audio.")
-    except sr.RequestError as e:
-        print(f"Could not request results; {e}")
-else:
-    print("No audio captured.")
+#print(text)
