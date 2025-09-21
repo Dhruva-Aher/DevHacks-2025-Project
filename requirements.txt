@@ -1,0 +1,7 @@
+flet
+numpy
+scipy
+sounddevice
+SpeechRecognition
+supermemory
+google-genai
